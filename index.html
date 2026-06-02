@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Translator Pro</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>🌍 AI Voice Translator Pro</h1>
+    <div class="subtitle">Premium Real-Time Translation Dashboard</div>
+
+    <!-- MODE SELECTION -->
+    <div class="tabs">
+        <button id="tab-text" onclick="showTab('text')" class="active">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+            Text → Text
+        </button>
+        <button id="tab-tts" onclick="showTab('tts')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            Text → Speech
+        </button>
+        <button id="tab-stt" onclick="showTab('stt')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
+            Speech → Text
+        </button>
+        <button id="tab-sts" onclick="showTab('sts')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1s-1 .45-1 1v6c0 .55.45 1 1 1zm-4 4c.55 0 1-.45 1-1v-8c0-.55-.45-1-1-1s-1 .45-1 1v8c0 .55.45 1 1 1zm-8-4c-.55 0-1 .45-1 1v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1zm4 2c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zm12-4H5c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2z"/></svg>
+            Speech → Speech
+        </button>
+    </div>
+
+    <!-- TEXT TO TEXT -->
+    <div id="text" class="card">
+        <h3>
+            <svg class="icon-svg" viewBox="0 0 24 24" style="color: #818cf8;"><path d="M21 15.24c0-.3-.07-.59-.21-.86L17 8H7l-3.79 6.38c-.14.27-.21.56-.21.86v4.76c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-4.76zM7.21 14h9.58L19 17.58V19H5v-1.42L7.21 14zM12 2C6.48 2 2 6.48 2 12h2c0-4.41 3.59-8 8-8s8 3.59 8 8h2c0-5.52-4.48-10-10-10z"/></svg>
+            Text → Text Translation
+        </h3>
+        
+        <div class="row-group">
+            <div class="input-group">
+                <label>Source Language</label>
+                <div class="flag-selector-grid" id="flag-src-text">
+                    <button class="flag-btn active" data-lang="auto" title="Auto-Detect">🌍 Auto</button>
+                    <button class="flag-btn" data-lang="en" title="English">🇺🇸 English</button>
+                    <button class="flag-btn" data-lang="es" title="Spanish">🇪🇸 Spanish</button>
+                    <button class="flag-btn" data-lang="fr" title="French">🇫🇷 French</button>
+                    <button class="flag-btn" data-lang="de" title="German">🇩🇪 German</button>
+                    <button class="flag-btn" data-lang="hi" title="Hindi">🇮🇳 Hindi</button>
+                    <button class="flag-btn" data-lang="ja" title="Japanese">🇯🇵 Japanese</button>
+                    <button class="flag-btn" data-lang="zh-CN" title="Chinese">🇨🇳 Chinese</button>
+                    <button class="flag-btn" data-lang="it" title="Italian">🇮🇹 Italian</button>
+                </div>
+                <select id="textSourceLang">
+                    <option value="auto">Auto-Detect</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Target Language</label>
+                <div class="flag-selector-grid" id="flag-dest-text">
+                    <button class="flag-btn" data-lang="en" title="English">🇺🇸 English</button>
+                    <button class="flag-btn active" data-lang="es" title="Spanish">🇪🇸 Spanish</button>
+                    <button class="flag-btn" data-lang="fr" title="French">🇫🇷 French</button>
+                    <button class="flag-btn" data-lang="de" title="German">🇩🇪 German</button>
+                    <button class="flag-btn" data-lang="hi" title="Hindi">🇮🇳 Hindi</button>
+                    <button class="flag-btn" data-lang="ja" title="Japanese">🇯🇵 Japanese</button>
+                    <button class="flag-btn" data-lang="zh-CN" title="Chinese">🇨🇳 Chinese</button>
+                    <button class="flag-btn" data-lang="it" title="Italian">🇮🇹 Italian</button>
+                </div>
+                <select id="textTargetLang">
+                    <option value="es">Spanish</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="textInput">Enter Text</label>
+            <textarea id="textInput" placeholder="Type what you want to translate here..."></textarea>
+        </div>
+
+        <button class="btn-primary" onclick="translateText()">
+            <span id="textBtnText">Translate</span>
+            <div id="textSpinner" class="loader-spinner hidden"></div>
+        </button>
+
+        <div class="input-group">
+            <label>Translation Result</label>
+            <div id="output" class="output-box empty">Translated text will appear here...</div>
+        </div>
+    </div>
+
+    <!-- TEXT TO SPEECH -->
+    <div id="tts" class="card hidden">
+        <h3>
+            <svg class="icon-svg" viewBox="0 0 24 24" style="color: #60a5fa;"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            Text → Speech Synthesizer
+        </h3>
+        
+        <div class="input-group">
+            <label>Voice Language</label>
+            <div class="flag-selector-grid" id="flag-tts-lang">
+                <button class="flag-btn active" data-lang="en" title="English">🇺🇸 English</button>
+                <button class="flag-btn" data-lang="es" title="Spanish">🇪🇸 Spanish</button>
+                <button class="flag-btn" data-lang="fr" title="French">🇫🇷 French</button>
+                <button class="flag-btn" data-lang="de" title="German">🇩🇪 German</button>
+                <button class="flag-btn" data-lang="hi" title="Hindi">🇮🇳 Hindi</button>
+                <button class="flag-btn" data-lang="ja" title="Japanese">🇯🇵 Japanese</button>
+                <button class="flag-btn" data-lang="zh-CN" title="Chinese">🇨🇳 Chinese</button>
+                <button class="flag-btn" data-lang="it" title="Italian">🇮🇹 Italian</button>
+            </div>
+            <select id="ttsLang">
+                <option value="en">English</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="ttsText">Enter Text to Speak</label>
+            <textarea id="ttsText" placeholder="Type the text you want converted to speech..."></textarea>
+        </div>
+
+        <button class="btn-primary" onclick="speakText()">
+            <span id="ttsBtnText">🔊 Generate & Play</span>
+            <div id="ttsSpinner" class="loader-spinner hidden"></div>
+        </button>
+        
+        <div id="ttsStatus" class="status-badge hidden">Synthesizing audio...</div>
+    </div>
+
+    <!-- SPEECH TO TEXT -->
+    <div id="stt" class="card hidden">
+        <h3>
+            <svg class="icon-svg" viewBox="0 0 24 24" style="color: #34d399;"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1 9h2v-3h-2v3z"/></svg>
+            Speech → Text Transcriber
+        </h3>
+
+        <div class="row-group">
+            <div class="input-group">
+                <label>Speaking Language</label>
+                <div class="flag-selector-grid" id="flag-src-stt">
+                    <button class="flag-btn active" data-lang="en" title="English">🇺🇸 English</button>
+                    <button class="flag-btn" data-lang="es" title="Spanish">🇪🇸 Spanish</button>
+                    <button class="flag-btn" data-lang="fr" title="French">🇫🇷 French</button>
+                    <button class="flag-btn" data-lang="de" title="German">🇩🇪 German</button>
+                    <button class="flag-btn" data-lang="hi" title="Hindi">🇮🇳 Hindi</button>
+                    <button class="flag-btn" data-lang="ja" title="Japanese">🇯🇵 Japanese</button>
+                    <button class="flag-btn" data-lang="zh-CN" title="Chinese">🇨🇳 Chinese</button>
+                    <button class="flag-btn" data-lang="it" title="Italian">🇮🇹 Italian</button>
+                </div>
+                <select id="sttLang">
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Target Language</label>
+                <div class="flag-selector-grid" id="flag-dest-stt">
+                    <button class="flag-btn" data-lang="en" title="English">🇺🇸 English</button>
+                    <button class="flag-btn active" data-lang="es" title="Spanish">🇪🇸 Spanish</button>
+                    <button class="flag-btn" data-lang="fr" title="French">🇫🇷 French</button>
+                    <button class="flag-btn" data-lang="de" title="German">🇩🇪 German</button>
+                    <button class="flag-btn" data-lang="hi" title="Hindi">🇮🇳 Hindi</button>
+                    <button class="flag-btn" data-lang="ja" title="Japanese">🇯🇵 Japanese</button>
+                    <button class="flag-btn" data-lang="zh-CN" title="Chinese">🇨🇳 Chinese</button>
+                    <button class="flag-btn" data-lang="it" title="Italian">🇮🇹 Italian</button>
+                </div>
+                <select id="sttTargetLang">
+                    <option value="es">Spanish</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="voice-wave" id="sttWave">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+        </div>
+
+        <div id="sttStatus" class="status-badge hidden">Ready</div>
+
+        <button id="sttRecordBtn" class="btn-record" onclick="toggleSttRecording()">
+            <span>🎤 Start Recording</span>
+        </button>
+
+        <div class="input-group">
+            <label>Transcribed Text</label>
+            <div id="speechOutput" class="output-box empty">Transcribed text will appear here...</div>
+        </div>
+    </div>
+
+    <!-- SPEECH TO SPEECH -->
+    <div id="sts" class="card hidden">
+        <h3>
+            <svg class="icon-svg" viewBox="0 0 24 24" style="color: #a78bfa;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+            Speech → Speech Translator
+        </h3>
+
+        <div class="row-group">
+            <div class="input-group">
+                <label>Your Language</label>
+                <div class="flag-selector-grid" id="flag-src-sts">
+                    <button class="flag-btn active" data-lang="en" title="English">🇺🇸 English</button>
+                    <button class="flag-btn" data-lang="es" title="Spanish">🇪🇸 Spanish</button>
+                    <button class="flag-btn" data-lang="fr" title="French">🇫🇷 French</button>
+                    <button class="flag-btn" data-lang="de" title="German">🇩🇪 German</button>
+                    <button class="flag-btn" data-lang="hi" title="Hindi">🇮🇳 Hindi</button>
+                    <button class="flag-btn" data-lang="ja" title="Japanese">🇯🇵 Japanese</button>
+                    <button class="flag-btn" data-lang="zh-CN" title="Chinese">🇨🇳 Chinese</button>
+                    <button class="flag-btn" data-lang="it" title="Italian">🇮🇹 Italian</button>
+                </div>
+                <select id="stsSourceLang">
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Target Language</label>
+                <div class="flag-selector-grid" id="flag-dest-sts">
+                    <button class="flag-btn" data-lang="en" title="English">🇺🇸 English</button>
+                    <button class="flag-btn active" data-lang="es" title="Spanish">🇪🇸 Spanish</button>
+                    <button class="flag-btn" data-lang="fr" title="French">🇫🇷 French</button>
+                    <button class="flag-btn" data-lang="de" title="German">🇩🇪 German</button>
+                    <button class="flag-btn" data-lang="hi" title="Hindi">🇮🇳 Hindi</button>
+                    <button class="flag-btn" data-lang="ja" title="Japanese">🇯🇵 Japanese</button>
+                    <button class="flag-btn" data-lang="zh-CN" title="Chinese">🇨🇳 Chinese</button>
+                    <button class="flag-btn" data-lang="it" title="Italian">🇮🇹 Italian</button>
+                </div>
+                <select id="stsTargetLang">
+                    <option value="es">Spanish</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="voice-wave" id="stsWave">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+        </div>
+
+        <div id="stsStatus" class="status-badge hidden">Ready</div>
+
+        <button id="stsRecordBtn" class="btn-record" onclick="toggleStsRecording()">
+            <span>🎤 Speak & Translate</span>
+        </button>
+
+        <div class="row-group">
+            <div class="input-group">
+                <label>Transcribed Input</label>
+                <div id="speechText" class="output-box empty">Waiting for voice input...</div>
+            </div>
+            <div class="input-group">
+                <label>Translated Output</label>
+                <div id="stsOutput" class="output-box empty">Waiting for translation...</div>
+            </div>
+        </div>
+
+        <!-- Animated Panda Character -->
+        <div id="sts-panda" class="panda-container">
+            <div class="panda-ear left"></div>
+            <div class="panda-ear right"></div>
+            <div class="panda-head">
+                <div class="panda-eye left"><div class="panda-pupil"></div></div>
+                <div class="panda-eye right"><div class="panda-pupil"></div></div>
+                <div class="panda-nose"></div>
+                <div class="panda-mouth"></div>
+            </div>
+        </div>
+
+        <button id="stsPlayBtn" class="btn-success" onclick="playStsAudio()" disabled>
+            <span>🔊 Replay Translation</span>
+        </button>
+    </div>
+
+    <!-- Cards container end -->
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
